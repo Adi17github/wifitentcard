@@ -15,7 +15,7 @@ export function PrintSheet({ config, wifiString, theme }: PrintSheetProps) {
         <TentCardFace config={config} wifiString={wifiString} theme={theme} className="h-full" />
       </div>
       <div className="print-fold">
-        <span>Fold here</span>
+        <span>Fold here to stand on table</span>
       </div>
       <div className="print-panel">
         <TentCardFace config={config} wifiString={wifiString} theme={theme} className="h-full" />

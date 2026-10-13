@@ -2,20 +2,21 @@
 
 import { useMemo, useRef, useState } from 'react'
 import { toPng } from 'html-to-image'
-import { Download, Loader2, Printer } from 'lucide-react'
+import { Download, Eye, Loader2, Printer } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { PresetPicker } from '@/components/preset-picker'
 import { PrintSheet } from '@/components/print-sheet'
 import { PrivacyBadge } from '@/components/privacy-badge'
 import { TentCardFace } from '@/components/tent-card-face'
 import { WifiForm } from '@/components/wifi-form'
-import { cn } from '@/lib/utils'
-import { buildWifiString, DEFAULT_HEADLINE, type CardTheme, type WifiConfig } from '@/lib/wifi'
-
-const THEME_OPTIONS: { value: CardTheme; label: string; swatch: string }[] = [
-  { value: 'minimal', label: 'Minimalist Modern', swatch: 'bg-white ring-neutral-300' },
-  { value: 'cozy', label: 'Cozy Airbnb', swatch: 'bg-[#FBF3E8] ring-[#C0573A]' },
-  { value: 'cafe', label: 'Cafe & Retail', swatch: 'bg-[#24180F] ring-[#E5B04A]' },
-]
+import {
+  buildWifiString,
+  CARD_PRESETS,
+  DEFAULT_HEADLINE,
+  isPresetHeadline,
+  type CardTheme,
+  type WifiConfig,
+} from '@/lib/wifi'
 
 export function WifiTool() {
   const [config, setConfig] = useState<WifiConfig>({
@@ -29,11 +30,21 @@ export function WifiTool() {
   const [theme, setTheme] = useState<CardTheme>('minimal')
   const [downloading, setDownloading] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
+  const previewRef = useRef<HTMLDivElement>(null)
 
   const wifiString = useMemo(() => buildWifiString(config), [config])
   const canExport = config.ssid.trim().length > 0
 
   const updateConfig = (patch: Partial<WifiConfig>) => setConfig((prev) => ({ ...prev, ...patch }))
+
+  function handlePresetChange(next: CardTheme) {
+    setTheme(next)
+    const preset = CARD_PRESETS.find((p) => p.value === next)
+    // Only swap the headline if the user hasn't written their own.
+    if (preset && isPresetHeadline(config.headline)) {
+      updateConfig({ headline: preset.headline })
+    }
+  }
 
   async function handleDownload() {
     if (!cardRef.current) return
@@ -52,73 +63,75 @@ export function WifiTool() {
     }
   }
 
+  function scrollToPreview() {
+    previewRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   return (
     <>
       <section
         id="generator"
         aria-labelledby="generator-heading"
-        className="mx-auto grid w-full max-w-7xl gap-8 px-4 pb-16 sm:px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12 lg:px-8 print:hidden"
+        className="mx-auto grid w-full max-w-7xl gap-8 px-4 pb-12 sm:px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12 lg:px-8 print:hidden"
       >
         <div className="flex flex-col gap-6">
-          <div className="rounded-2xl border bg-card p-5 shadow-sm sm:p-7">
-            <h2 id="generator-heading" className="mb-1 text-lg font-semibold tracking-tight">
+          <div className="rounded-2xl border bg-card p-5 shadow-sm transition-colors duration-300 sm:p-7">
+            <h2 id="generator-heading" className="mb-1 text-lg font-bold tracking-tight">
               Your network details
             </h2>
             <p className="mb-6 text-sm text-muted-foreground">The preview updates as you type.</p>
             <WifiForm config={config} onChange={updateConfig} />
           </div>
+
+          <div className="rounded-2xl border bg-card p-5 shadow-sm transition-colors duration-300 sm:p-7">
+            <h2 className="mb-1 text-lg font-bold tracking-tight">Card design</h2>
+            <p className="mb-5 text-sm text-muted-foreground">Pick a preset to match your space.</p>
+            <PresetPicker value={theme} onChange={handlePresetChange} />
+          </div>
+
           <PrivacyBadge />
         </div>
 
-        <div className="flex flex-col gap-5 lg:sticky lg:top-6 lg:self-start">
-          <div className="rounded-2xl border bg-muted/60 p-4 sm:p-6">
-            <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div
+          ref={previewRef}
+          id="preview"
+          className="flex scroll-mt-20 flex-col gap-5 lg:sticky lg:top-20 lg:self-start"
+        >
+          <div className="rounded-2xl border bg-muted/60 p-4 transition-colors duration-300 sm:p-6">
+            <div className="mb-4 flex items-center justify-between gap-3">
               <h2 className="text-sm font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                 Live preview
               </h2>
-              <div role="radiogroup" aria-label="Card theme" className="flex flex-wrap gap-1.5">
-                {THEME_OPTIONS.map((option) => {
-                  const checked = theme === option.value
-                  return (
-                    <button
-                      key={option.value}
-                      type="button"
-                      role="radio"
-                      aria-checked={checked}
-                      onClick={() => setTheme(option.value)}
-                      className={cn(
-                        'inline-flex items-center gap-2 rounded-full border bg-background px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
-                        checked && 'border-foreground text-foreground',
-                      )}
-                    >
-                      <span className={cn('size-3 rounded-full ring-2', option.swatch)} aria-hidden="true" />
-                      {option.label}
-                    </button>
-                  )
-                })}
-              </div>
+              <span className="rounded-full border bg-background px-2.5 py-1 text-xs font-medium text-foreground">
+                {CARD_PRESETS.find((p) => p.value === theme)?.label}
+              </span>
             </div>
 
-            <div className="rounded-xl shadow-[0_20px_50px_-20px_rgba(0,0,0,0.35)] ring-1 ring-black/5">
+            <div className="rounded-xl bg-white shadow-[0_24px_60px_-24px_rgba(0,0,0,0.45)] ring-1 ring-black/5 dark:ring-white/10">
               <div ref={cardRef} className="overflow-hidden rounded-xl">
                 <TentCardFace config={config} wifiString={wifiString} theme={theme} />
               </div>
             </div>
 
             <p className="mt-4 text-center text-xs text-muted-foreground">
-              Prints on a single A4 or US Letter sheet. Fold along the center line to stand it up.
+              Prints on a single A4 or US Letter sheet. Fold along the dashed line to stand it on a table.
             </p>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-2">
-            <Button size="lg" className="h-12 text-sm" onClick={() => window.print()} disabled={!canExport}>
+            <Button
+              size="lg"
+              className="h-12 text-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
+              onClick={() => window.print()}
+              disabled={!canExport}
+            >
               <Printer aria-hidden="true" />
               Print Tent Card
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="h-12 bg-background text-sm"
+              className="h-12 bg-background text-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
               onClick={handleDownload}
               disabled={!canExport || downloading}
             >
@@ -146,6 +159,19 @@ export function WifiTool() {
           </details>
         </div>
       </section>
+
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t bg-background/90 px-4 py-3 backdrop-blur-md lg:hidden print:hidden">
+        <div className="mx-auto grid max-w-md grid-cols-2 gap-3">
+          <Button variant="outline" className="h-11 bg-background" onClick={scrollToPreview}>
+            <Eye aria-hidden="true" />
+            Preview Card
+          </Button>
+          <Button className="h-11" onClick={() => window.print()} disabled={!canExport}>
+            <Printer aria-hidden="true" />
+            Print Card
+          </Button>
+        </div>
+      </div>
 
       <PrintSheet config={config} wifiString={wifiString} theme={theme} />
     </>

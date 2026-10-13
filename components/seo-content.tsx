@@ -1,9 +1,11 @@
+import { AdSlot } from '@/components/ad-slot'
 import { FaqAccordion } from '@/components/faq-accordion'
 
 export function SeoContent() {
   return (
     <section aria-labelledby="guide-heading" className="border-t bg-muted/40 print:hidden">
-      <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:py-24">
+      <div className="mx-auto flex max-w-7xl flex-col gap-12 px-4 py-16 sm:px-6 lg:flex-row lg:items-start lg:gap-16 lg:px-8 lg:py-24">
+      <div className="min-w-0 max-w-3xl flex-1">
         <p className="mb-3 text-sm font-semibold uppercase tracking-[0.14em] text-brand">The guide</p>
         <h2 id="guide-heading" className="text-balance font-serif text-3xl font-medium tracking-tight sm:text-4xl">
           Everything you need to know about WiFi QR codes
@@ -84,6 +86,8 @@ export function SeoContent() {
             <FaqAccordion />
           </div>
         </article>
+      </div>
+      <AdSlot variant="rectangle" slotId="sidebar-rectangle" className="mx-auto shrink-0 lg:sticky lg:top-24" />
       </div>
     </section>
   )
