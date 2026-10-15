@@ -40,7 +40,6 @@ export function WifiTool() {
   function handlePresetChange(next: CardTheme) {
     setTheme(next)
     const preset = CARD_PRESETS.find((p) => p.value === next)
-    // Only swap the headline if the user hasn't written their own.
     if (preset && isPresetHeadline(config.headline)) {
       updateConfig({ headline: preset.headline })
     }
@@ -75,17 +74,20 @@ export function WifiTool() {
         className="mx-auto grid w-full max-w-7xl gap-8 px-4 pb-12 sm:px-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12 lg:px-8 print:hidden"
       >
         <div className="flex flex-col gap-6">
-          <div className="rounded-2xl border bg-card p-5 shadow-sm transition-colors duration-300 sm:p-7">
+          <div className="rounded-2xl border bg-card p-5 shadow-sm transition-all duration-300 sm:p-7">
             <h2 id="generator-heading" className="mb-1 text-lg font-bold tracking-tight">
               Your network details
             </h2>
-            <p className="mb-6 text-sm text-muted-foreground">The preview updates as you type.</p>
+            <p className="mb-6 text-sm text-muted-foreground">The preview updates as you type — everything stays on your device.</p>
             <WifiForm config={config} onChange={updateConfig} />
           </div>
 
-          <div className="rounded-2xl border bg-card p-5 shadow-sm transition-colors duration-300 sm:p-7">
-            <h2 className="mb-1 text-lg font-bold tracking-tight">Card design</h2>
-            <p className="mb-5 text-sm text-muted-foreground">Pick a preset to match your space.</p>
+          <div className="rounded-2xl border bg-card p-5 shadow-sm transition-all duration-300 sm:p-7">
+            <div className="mb-1 flex items-center justify-between">
+              <h2 className="text-lg font-bold tracking-tight">Card design</h2>
+              <span className="text-xs font-medium text-muted-foreground">{CARD_PRESETS.length} templates</span>
+            </div>
+            <p className="mb-5 text-sm text-muted-foreground">Pick a template to match your space, then customize the text.</p>
             <PresetPicker value={theme} onChange={handlePresetChange} />
           </div>
 
@@ -102,12 +104,12 @@ export function WifiTool() {
               <h2 className="text-sm font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                 Live preview
               </h2>
-              <span className="rounded-full border bg-background px-2.5 py-1 text-xs font-medium text-foreground">
+              <span className="rounded-full border bg-background px-2.5 py-1 text-xs font-medium text-foreground shadow-xs">
                 {CARD_PRESETS.find((p) => p.value === theme)?.label}
               </span>
             </div>
 
-            <div className="rounded-xl bg-white shadow-[0_24px_60px_-24px_rgba(0,0,0,0.45)] ring-1 ring-black/5 dark:ring-white/10">
+            <div className="rounded-xl bg-white shadow-[0_24px_60px_-24px_rgba(0,0,0,0.45)] ring-1 ring-black/5 transition-shadow duration-300 hover:shadow-[0_28px_70px_-20px_rgba(0,0,0,0.5)] dark:ring-white/10">
               <div ref={cardRef} className="overflow-hidden rounded-xl">
                 <TentCardFace config={config} wifiString={wifiString} theme={theme} />
               </div>
@@ -149,8 +151,8 @@ export function WifiTool() {
             </p>
           )}
 
-          <details className="group rounded-lg border bg-background px-4 py-3 text-xs">
-            <summary className="cursor-pointer select-none font-medium text-muted-foreground">
+          <details className="group rounded-lg border bg-background px-4 py-3 text-xs transition-colors duration-200 hover:border-foreground/20">
+            <summary className="cursor-pointer select-none font-medium text-muted-foreground transition-colors hover:text-foreground">
               View encoded QR payload
             </summary>
             <code className="mt-2 block break-all font-mono text-foreground">

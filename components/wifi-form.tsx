@@ -43,7 +43,7 @@ export function WifiForm({ config, onChange }: WifiFormProps) {
               <label
                 key={option.value}
                 className={cn(
-                  'flex cursor-pointer items-center justify-center rounded-md px-2 py-2 text-center text-xs font-medium text-muted-foreground transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring sm:text-sm',
+                  'flex cursor-pointer items-center justify-center rounded-md px-2 py-2 text-center text-xs font-medium text-muted-foreground transition-all duration-200 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring sm:text-sm',
                   checked && 'bg-background text-foreground shadow-sm',
                 )}
               >
@@ -140,7 +140,7 @@ function ToggleRow({
   onCheckedChange: (checked: boolean) => void
 }) {
   return (
-    <div className={cn('flex items-center justify-between gap-4 px-4 py-3', disabled && 'opacity-50')}>
+    <div className={cn('flex items-center justify-between gap-4 px-4 py-3.5', disabled && 'opacity-50')}>
       <div className="flex flex-col gap-0.5">
         <Label htmlFor={id}>{label}</Label>
         <p className="text-xs text-muted-foreground">{description}</p>

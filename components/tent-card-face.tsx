@@ -1,5 +1,18 @@
 import { QRCodeSVG } from 'qrcode.react'
-import { Building2, Coffee, Flower2, Gem, PartyPopper, Wifi } from 'lucide-react'
+import {
+  Building2,
+  Coffee,
+  Flower2,
+  Gem,
+  PartyPopper,
+  Snowflake,
+  Waves,
+  Leaf,
+  Crown,
+  Sun,
+  LayoutGrid,
+  Wifi,
+} from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { CardTheme, WifiConfig } from '@/lib/wifi'
 
@@ -89,6 +102,72 @@ const THEMES: Record<CardTheme, ThemeStyle> = {
     Icon: PartyPopper,
     tagline: 'The party has WiFi',
   },
+  nordic: {
+    root: 'bg-[#EDF3F7] text-[#1E3A4C] font-sans',
+    headline: 'font-sans font-bold tracking-tight',
+    accent: 'text-[#3B82B5]',
+    label: 'text-[#6B9CB8] uppercase tracking-[0.18em]',
+    value: 'font-mono font-semibold text-[#1E3A4C]',
+    qrWrap: 'bg-white ring-1 ring-[#C7DAE8] rounded-[1.8cqw] shadow-sm',
+    fg: '#1E3A4C',
+    Icon: Snowflake,
+    tagline: 'Stay connected with us',
+  },
+  beach: {
+    root: 'bg-[#F0F5EB] text-[#1C4A45] font-sans',
+    headline: 'font-serif font-medium',
+    accent: 'text-[#2BA39A]',
+    label: 'text-[#5E9B8E] uppercase tracking-[0.16em]',
+    value: 'font-mono font-medium text-[#1C4A45]',
+    qrWrap: 'bg-white ring-1 ring-[#BDD9CF] rounded-[2.4cqw]',
+    fg: '#1C4A45',
+    Icon: Waves,
+    tagline: 'Surf, sand & free WiFi',
+  },
+  garden: {
+    root: 'bg-[#F2F5EC] text-[#2D3E1F] font-sans',
+    headline: 'font-serif font-medium italic',
+    accent: 'text-[#6B8E4E]',
+    label: 'text-[#7E9B68] uppercase tracking-[0.18em]',
+    value: 'font-mono font-medium text-[#2D3E1F]',
+    qrWrap: 'bg-white ring-1 ring-[#CDD9B8] rounded-[2.4cqw]',
+    fg: '#2D3E1F',
+    Icon: Leaf,
+    tagline: 'Relax and connect',
+  },
+  monogram: {
+    root: 'bg-[#F8F6F1] text-[#3B3530] font-sans',
+    headline: 'font-serif font-normal tracking-wide',
+    accent: 'text-[#8B7355]',
+    label: 'text-[#A09580] uppercase tracking-[0.26em]',
+    value: 'font-serif text-[#3B3530] tracking-wide',
+    qrWrap: 'bg-[#F8F6F1] ring-[0.3cqw] ring-[#8B7355] ring-offset-[0.6cqw] ring-offset-[#F8F6F1] rounded-none',
+    fg: '#3B3530',
+    Icon: Crown,
+    tagline: 'Est. Guest WiFi',
+  },
+  sunset: {
+    root: 'bg-[#FFF0E8] text-[#5C2818] font-sans',
+    headline: 'font-sans font-bold tracking-tight',
+    accent: 'text-[#E8714A]',
+    label: 'text-[#C4885F] uppercase tracking-[0.18em]',
+    value: 'font-mono font-semibold text-[#5C2818]',
+    qrWrap: 'bg-white ring-1 ring-[#F4C9A8] rounded-[2.4cqw] shadow-sm',
+    fg: '#5C2818',
+    Icon: Sun,
+    tagline: 'Sip, stay, connect',
+  },
+  studio: {
+    root: 'bg-[#F0F0EE] text-[#2A2A28] font-sans',
+    headline: 'font-sans font-extrabold tracking-tight',
+    accent: 'text-[#D96C3F]',
+    label: 'text-[#6B6B68] uppercase tracking-[0.16em]',
+    value: 'font-mono font-semibold text-[#2A2A28]',
+    qrWrap: 'bg-white ring-1 ring-[#D0D0CC] rounded-[1cqw] shadow-sm',
+    fg: '#2A2A28',
+    Icon: LayoutGrid,
+    tagline: 'Loft WiFi Network',
+  },
 }
 
 const CONFETTI = [
@@ -140,6 +219,54 @@ function ThemeDecor({ theme }: { theme: CardTheme }) {
           {CONFETTI.map((dot, index) => (
             <span key={index} aria-hidden="true" className={cn('absolute', dot.className)} />
           ))}
+        </>
+      )
+    case 'nordic':
+      return (
+        <>
+          <div aria-hidden="true" className="absolute inset-[2.5cqw] border-[0.2cqw] border-[#C7DAE8] rounded-[1.5cqw]" />
+          <div aria-hidden="true" className="absolute inset-y-0 left-0 w-[1.2cqw] bg-[#3B82B5]/30" />
+        </>
+      )
+    case 'beach':
+      return (
+        <>
+          <div aria-hidden="true" className="absolute inset-[2.5cqw] border-[0.25cqw] border-[#BDD9CF] rounded-[2cqw]" />
+          <div aria-hidden="true" className="absolute bottom-0 left-0 h-[3cqw] w-full bg-[#BDD9CF]/40" />
+        </>
+      )
+    case 'garden':
+      return (
+        <>
+          <div
+            aria-hidden="true"
+            className="absolute inset-[2.5cqw] rounded-[2cqw] border-[0.3cqw] border-dashed border-[#CDD9B8]"
+          />
+          <div aria-hidden="true" className="absolute -left-[4cqw] -bottom-[4cqw] size-[14cqw] rounded-full bg-[#CDD9B8]/50" />
+        </>
+      )
+    case 'monogram':
+      return (
+        <>
+          <div aria-hidden="true" className="absolute inset-[2.2cqw] border-[0.25cqw] border-[#8B7355]" />
+          <div aria-hidden="true" className="absolute inset-[3.2cqw] border-[0.1cqw] border-[#8B7355]/50" />
+        </>
+      )
+    case 'sunset':
+      return (
+        <>
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-b from-[#FFE4D1]/0 via-[#FFE4D1]/0 to-[#F4C9A8]/50"
+          />
+          <div aria-hidden="true" className="absolute inset-[2.5cqw] border-[0.25cqw] border-[#F4C9A8] rounded-[2cqw]" />
+        </>
+      )
+    case 'studio':
+      return (
+        <>
+          <div aria-hidden="true" className="absolute inset-0 border-[0.2cqw] border-[#D0D0CC]" />
+          <div aria-hidden="true" className="absolute top-0 right-0 w-[6cqw] h-full bg-[#D96C3F]/8" />
         </>
       )
   }

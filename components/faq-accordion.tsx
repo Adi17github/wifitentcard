@@ -27,6 +27,14 @@ const FAQS = [
     q: 'What paper should I use for printing?',
     a: 'A matte cardstock between 160 and 250 gsm works best. It stands up well when folded and avoids the glare that glossy paper creates, which can make QR codes harder to scan.',
   },
+  {
+    q: 'Can I customize the headline and text on each template?',
+    a: 'Absolutely. Every template lets you set your own headline, toggle whether the password is printed on the card, and choose your security type. The live preview updates instantly so you see changes as you make them.',
+  },
+  {
+    q: 'Do I need an account or any software installed?',
+    a: 'No. There are no accounts, no downloads, and no installations. The entire tool runs in your web browser. Just open the page, type your details, pick a template, and print or download.',
+  },
 ]
 
 export function FaqAccordion() {

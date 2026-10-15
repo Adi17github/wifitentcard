@@ -12,7 +12,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t print:hidden">
       <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-10 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
-        <Link href="/" className="flex items-center gap-2 text-sm font-semibold">
+        <Link href="/" className="flex items-center gap-2 text-sm font-semibold transition-opacity duration-200 hover:opacity-80">
           <span className="flex size-7 items-center justify-center rounded-md bg-foreground text-background">
             <Wifi className="size-4" aria-hidden="true" />
           </span>

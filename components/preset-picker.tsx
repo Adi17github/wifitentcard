@@ -11,7 +11,11 @@ interface PresetPickerProps {
 
 export function PresetPicker({ value, onChange }: PresetPickerProps) {
   return (
-    <div role="radiogroup" aria-label="Card design preset" className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+    <div
+      role="radiogroup"
+      aria-label="Card design template"
+      className="grid max-h-[360px] grid-cols-2 gap-3 overflow-y-auto pr-1 sm:grid-cols-3"
+    >
       {CARD_PRESETS.map((preset) => {
         const checked = value === preset.value
         return (
@@ -23,7 +27,7 @@ export function PresetPicker({ value, onChange }: PresetPickerProps) {
             onClick={() => onChange(preset.value)}
             className={cn(
               'group relative flex flex-col overflow-hidden rounded-xl border bg-background text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
-              checked && 'border-foreground ring-1 ring-foreground',
+              checked ? 'border-foreground ring-1 ring-foreground shadow-sm' : 'border-border',
             )}
           >
             <span
@@ -50,7 +54,7 @@ export function PresetPicker({ value, onChange }: PresetPickerProps) {
               <span className="text-[11px] leading-snug text-muted-foreground">{preset.description}</span>
             </span>
             {checked && (
-              <span className="absolute right-1.5 top-1.5 flex size-5 items-center justify-center rounded-full bg-foreground text-background">
+              <span className="absolute right-1.5 top-1.5 flex size-5 items-center justify-center rounded-full bg-foreground text-background shadow-sm">
                 <Check className="size-3" aria-hidden="true" />
               </span>
             )}

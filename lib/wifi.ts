@@ -1,6 +1,18 @@
 export type SecurityType = 'WPA' | 'WEP' | 'nopass'
 
-export type CardTheme = 'minimal' | 'cozy' | 'cafe' | 'luxury' | 'office' | 'party'
+export type CardTheme =
+  | 'minimal'
+  | 'cozy'
+  | 'cafe'
+  | 'luxury'
+  | 'office'
+  | 'party'
+  | 'nordic'
+  | 'beach'
+  | 'garden'
+  | 'monogram'
+  | 'sunset'
+  | 'studio'
 
 export interface WifiConfig {
   ssid: string
@@ -69,6 +81,48 @@ export const CARD_PRESETS: CardPreset[] = [
     description: 'Rounded, vibrant, festive',
     headline: "Let's Party! Hop on the WiFi",
     swatch: { bg: '#FFF4E6', accent: '#FF4D8D', ink: '#2B1B4A' },
+  },
+  {
+    value: 'nordic',
+    label: 'Nordic Calm',
+    description: 'Frosty blues, clean sans',
+    headline: 'Stay connected with us',
+    swatch: { bg: '#EDF3F7', accent: '#3B82B5', ink: '#1E3A4C' },
+  },
+  {
+    value: 'beach',
+    label: 'Beach House',
+    description: 'Sandy & teal, breezy feel',
+    headline: 'Sur, sand & free WiFi',
+    swatch: { bg: '#F0F5EB', accent: '#2BA39A', ink: '#1C4A45' },
+  },
+  {
+    value: 'garden',
+    label: 'Garden Cottage',
+    description: 'Sage & botanical greens',
+    headline: 'Relax and connect',
+    swatch: { bg: '#F2F5EC', accent: '#6B8E4E', ink: '#2D3E1F' },
+  },
+  {
+    value: 'monogram',
+    label: 'Monogram Classic',
+    description: 'Elegant initial, timeless',
+    headline: 'Guest WiFi',
+    swatch: { bg: '#F8F6F1', accent: '#8B7355', ink: '#3B3530' },
+  },
+  {
+    value: 'sunset',
+    label: 'Sunset Lounge',
+    description: 'Warm gradient, golden hour',
+    headline: 'Sip, stay, connect',
+    swatch: { bg: '#FFF0E8', accent: '#E8714A', ink: '#5C2818' },
+  },
+  {
+    value: 'studio',
+    label: 'Studio Loft',
+    description: 'Concrete grays, urban edge',
+    headline: 'Loft WiFi Network',
+    swatch: { bg: '#F0F0EE', accent: '#D96C3F', ink: '#2A2A28' },
   },
 ]
 

@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: '%s | WiFi Tent Card',
   },
   description:
-    'Create a printable fold-over WiFi QR code tent card in seconds. 6 designs for Airbnb hosts, cafés, hotels, offices and parties. 100% client-side — your WiFi password never leaves your browser.',
+    'Create a printable fold-over WiFi QR code tent card in seconds. 12+ free templates for Airbnb hosts, cafés, hotels, offices, parties and more. 100% client-side — your WiFi password never leaves your browser.',
   keywords: [
     'wifi qr code',
     'wifi tent card',
@@ -24,6 +24,12 @@ export const metadata: Metadata = {
     'airbnb wifi card',
     'printable wifi qr',
     'cafe wifi sign',
+    'wifi qr code generator',
+    'hotel wifi card',
+    'office wifi sign',
+    'wifi password card',
+    'qr code wifi',
+    'printable wifi sign',
   ],
   generator: 'v0.app',
   icons: {
